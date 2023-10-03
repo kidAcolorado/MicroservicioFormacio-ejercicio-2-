@@ -6,14 +6,14 @@ import java.util.Objects;
 
 public class Curso {
 
-	private String codigoCurso;
+	private String codigo;
 	private String nombre;
 	private int duracion; 
 	private int precio; 
 	
-	public Curso(String codigoCurso, String nombre, int duracion, int precio) {
+	public Curso(String codigo, String nombre, int duracion, int precio) {
 		super();
-		this.codigoCurso = codigoCurso;
+		this.codigo = codigo;
 		this.nombre = nombre;
 		this.duracion = duracion;
 		this.precio = precio;
@@ -23,12 +23,12 @@ public class Curso {
 		super();
 	}
 
-	public String getCodigoCurso() {
-		return codigoCurso;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setCodigoCurso(String codigoCurso) {
-		this.codigoCurso = codigoCurso;
+	public void setCodigo(String codigoCurso) {
+		this.codigo = codigoCurso;
 	}
 
 	public String getNombre() {
@@ -57,7 +57,7 @@ public class Curso {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigoCurso);
+		return Objects.hash(codigo);
 	}
 
 	@Override
@@ -69,12 +69,12 @@ public class Curso {
 		if (getClass() != obj.getClass())
 			return false;
 		Curso other = (Curso) obj;
-		return Objects.equals(codigoCurso, other.codigoCurso);
+		return Objects.equals(codigo, other.codigo);
 	}
 
 	@Override
 	public String toString() {
-		return "Curso [codigoCurso=" + codigoCurso + ", nombre=" + nombre + ", duracion=" + duracion + ", precio="
+		return "Curso [codigoCurso=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion + ", precio="
 				+ precio + "]";
 	}
 }

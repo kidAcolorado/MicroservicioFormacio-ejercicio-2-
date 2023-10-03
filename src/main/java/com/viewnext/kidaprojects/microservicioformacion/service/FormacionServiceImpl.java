@@ -23,39 +23,40 @@ public class FormacionServiceImpl implements FormacionService {
 
 	@Override
 	public ResponseEntity<?> devolverListaCursos() {
-		ResponseEntity<List<Curso>> response = cursoWebClient.get()
+		ResponseEntity<List<Curso>> listCursosResponse = cursoWebClient.get()
 				.uri("curso")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntityList(Curso.class)
 				.block();
-		if (response != null && response.getStatusCode() == HttpStatus.OK) {
-			List<Curso> listaCursos = response.getBody();
+		if (listCursosResponse != null && listCursosResponse.getStatusCode() == HttpStatus.OK) {
+			List<Curso> listaCursos = listCursosResponse.getBody();
 			List<Formacion> listaFormaciones = mapper.toFormacionList(listaCursos);
 
 			return ResponseEntity.ok(listaFormaciones);
 
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NOT_FOUND");
 		}
 
 	}
 
 	@Override
 	public ResponseEntity<?> darAltaCurso(Formacion formacion) {
-		ResponseEntity<List<Curso>> response = cursoWebClient.get()
+		ResponseEntity<List<Curso>> listaCursoResponse = cursoWebClient.get()
 				.uri("curso")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntityList(Curso.class)
 				.block();
 
-		if (response != null && response.getStatusCode() == HttpStatus.OK) {
-			List<Curso> listaCursos = response.getBody();
+		if (listaCursoResponse != null && listaCursoResponse.getStatusCode() == HttpStatus.OK) {
+			List<Curso> listaCursos = listaCursoResponse.getBody();
 
 			for (Curso c : listaCursos) {
-				if (c.getCodigoCurso().equalsIgnoreCase(formacion.getCurso())) {
-					return ResponseEntity.noContent().build();
+				if (c.getCodigo().equalsIgnoreCase(formacion.getCurso())) {
+					return ResponseEntity.status(HttpStatus.CONFLICT)
+				            .body("Ya existe un curso con el código proporcionado.");
 				}
 			}
 
@@ -70,7 +71,8 @@ public class FormacionServiceImpl implements FormacionService {
 
 			return ResponseEntity.noContent().build();
 		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+	                .body("No se pudo obtener la lista de cursos.");
 		}
 	}
 
