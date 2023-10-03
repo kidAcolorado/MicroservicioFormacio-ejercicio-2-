@@ -3,7 +3,15 @@ package com.viewnext.kidaprojects.microservicioformacion.model;
 import java.util.Objects;
 
 
-
+/**
+ * La clase {@code Curso} representa una clase auxiliar para el tratamiento de datos provenientes de la Api ApiCrudCursos. 
+ * Contiene información sobre el código del curso, nombre, duración y precio.
+ *
+ * <p>El autor de esta clase es Víctor Colorado "Kid A".</p>
+ *
+ * @version 1.0
+ * @since 3 de octubre de 2023
+ */
 public class Curso {
 
 	private String codigo;

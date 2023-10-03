@@ -2,6 +2,15 @@ package com.viewnext.kidaprojects.microservicioformacion.model;
 
 import java.util.Objects;
 
+/**
+ * La clase {@code Formacion} representa información sobre una formación relacionada con un curso. Contiene detalles
+ * como el nombre del curso, la cantidad de asignaturas y el precio de la formación.
+ *
+ * <p>El autor de esta clase es Víctor Colorado "Kid A".</p>
+ *
+ * @version 1.0
+ * @since 3 de octubre de 2023
+ */
 public class Formacion {
 
 	private String curso;

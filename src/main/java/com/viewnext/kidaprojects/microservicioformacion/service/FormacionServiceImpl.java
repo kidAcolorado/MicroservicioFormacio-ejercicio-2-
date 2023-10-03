@@ -12,17 +12,37 @@ import com.viewnext.kidaprojects.microservicioformacion.mapper.FormacionMapper;
 import com.viewnext.kidaprojects.microservicioformacion.model.Curso;
 import com.viewnext.kidaprojects.microservicioformacion.model.Formacion;
 
+/**
+ * La clase {@code FormacionServiceImpl} implementa la interfaz {@link FormacionService} y proporciona
+ * la lógica para realizar operaciones relacionadas con formaciones y cursos.
+ *
+ * <p>El autor de esta clase es Víctor Colorado "Kid A".</p>
+ *
+ * @version 1.0
+ * @since 3 de octubre de 2023
+ */
 @Service
 public class FormacionServiceImpl implements FormacionService {
 
 	private WebClient cursoWebClient;
 	private FormacionMapper mapper;
 
+	/**
+     * Crea una instancia de {@code FormacionServiceImpl} con el cliente WebClient y el mapeador FormacionMapper proporcionados.
+     *
+     * @param cursoWebClient El cliente WebClient utilizado para realizar llamadas a servicios web.
+     * @param mapper          El mapeador FormacionMapper utilizado para convertir entre objetos de formación y cursos.
+     */
 	public FormacionServiceImpl(WebClient cursoWebClient, FormacionMapper mapper) {
 		this.cursoWebClient = cursoWebClient;
 		this.mapper = mapper;
 	}
 
+	/**
+     * Devuelve una lista de cursos disponibles en formato JSON.
+     *
+     * @return Una ResponseEntity con la lista de formaciones en formato JSON.
+     */
 	@Override
 	public ResponseEntity<?> devolverListaCursos() {
 		
@@ -45,6 +65,12 @@ public class FormacionServiceImpl implements FormacionService {
 
 	}
 
+	/**
+     * Realiza el alta de un curso y devuelve una respuesta adecuada.
+     *
+     * @param formacion La información de la formación a dar de alta.
+     * @return Una ResponseEntity con la respuesta apropiada.
+     */
 	@Override
 	public ResponseEntity<?> darAltaCurso(Formacion formacion) {
 		ResponseEntity<List<Curso>> listaCursoResponse = cursoWebClient.get()
