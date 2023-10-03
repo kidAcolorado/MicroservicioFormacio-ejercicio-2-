@@ -1,6 +1,5 @@
 package com.viewnext.kidaprojects.microservicioformacion.mapper;
 
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -14,13 +13,9 @@ public class FormacionMapper {
 	public Formacion toFormacion(Curso curso) {
 		Formacion formacion = new Formacion();
 
-		if (curso.getDuracion() >= 50) {
-			formacion.setAsignaturas(10);
-		} else {
-			formacion.setAsignaturas(5);
-		}
+		formacion.setAsignaturas(curso.getDuracion() >= 50 ? 10 : 5);
 
-		formacion.setCurso(curso.getCodigoCurso());
+		formacion.setCurso(curso.getNombre());
 		formacion.setPrecio(curso.getPrecio());
 
 		return formacion;
@@ -29,26 +24,22 @@ public class FormacionMapper {
 
 	public List<Formacion> toFormacionList(List<Curso> listaCursos) {
 
-		return listaCursos.stream()
-				.map(this::toFormacion)
-				.toList();
+		return listaCursos.stream().map(this::toFormacion).toList();
 
 	}
-	
+
 	public Curso toCurso(Formacion formacion) {
 		Curso curso = new Curso();
-		
-		curso.setCodigoCurso(formacion.getCurso());
-		curso.setNombre("default");
+
+		curso.setCodigoCurso("default");
+		curso.setNombre(formacion.getCurso());
 		curso.setDuracion(formacion.getAsignaturas() * 10);
 		curso.setPrecio(formacion.getPrecio());
-		
+
 		return curso;
 	}
-	
-	public List<Curso> toCursoList(List<Formacion> listaFormacion){
-		return listaFormacion.stream()
-				.map(this::toCurso)
-				.toList();
+
+	public List<Curso> toCursoList(List<Formacion> listaFormacion) {
+		return listaFormacion.stream().map(this::toCurso).toList();
 	}
 }
