@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.viewnext.kidaprojects.microservicioformacion.mapper.FormacionMapper;
 import com.viewnext.kidaprojects.microservicioformacion.model.Curso;
 import com.viewnext.kidaprojects.microservicioformacion.model.Formacion;
 
+@Service
 public class FormacionServiceImpl implements FormacionService {
 
 	private WebClient cursoWebClient;
@@ -23,12 +25,14 @@ public class FormacionServiceImpl implements FormacionService {
 
 	@Override
 	public ResponseEntity<?> devolverListaCursos() {
+		
 		ResponseEntity<List<Curso>> listCursosResponse = cursoWebClient.get()
-				.uri("curso")
+				.uri("/curso")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntityList(Curso.class)
 				.block();
+		
 		if (listCursosResponse != null && listCursosResponse.getStatusCode() == HttpStatus.OK) {
 			List<Curso> listaCursos = listCursosResponse.getBody();
 			List<Formacion> listaFormaciones = mapper.toFormacionList(listaCursos);
@@ -44,7 +48,7 @@ public class FormacionServiceImpl implements FormacionService {
 	@Override
 	public ResponseEntity<?> darAltaCurso(Formacion formacion) {
 		ResponseEntity<List<Curso>> listaCursoResponse = cursoWebClient.get()
-				.uri("curso")
+				.uri("/curso")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.toEntityList(Curso.class)
@@ -56,7 +60,7 @@ public class FormacionServiceImpl implements FormacionService {
 			for (Curso c : listaCursos) {
 				if (c.getCodigo().equalsIgnoreCase(formacion.getCurso())) {
 					return ResponseEntity.status(HttpStatus.CONFLICT)
-				            .body("Ya existe un curso con el código proporcionado.");
+							.body("Ya existe un curso con el código proporcionado.");
 				}
 			}
 
@@ -71,8 +75,7 @@ public class FormacionServiceImpl implements FormacionService {
 
 			return ResponseEntity.noContent().build();
 		} else {
-			return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-	                .body("No se pudo obtener la lista de cursos.");
+			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("No se pudo obtener la lista de cursos.");
 		}
 	}
 

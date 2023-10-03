@@ -34,8 +34,8 @@ public class FormacionMapper {
 		Curso curso = new Curso();
 
 		curso.setCodigo(formacion.getCurso());
-		curso.setNombre(formacion.getCurso() + " - DEFAULT_NAME");
-		curso.setDuracion(formacion.getAsignaturas() * 10);
+		curso.setNombre(null);
+		curso.setDuracion(formacion.getAsignaturas()*10);
 		curso.setPrecio(formacion.getPrecio());
 
 		return curso;
