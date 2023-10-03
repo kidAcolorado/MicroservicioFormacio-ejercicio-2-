@@ -25,7 +25,7 @@ public class FormacionServiceImpl implements FormacionService {
 	public ResponseEntity<?> devolverListaCursos() {
 		ResponseEntity<List<Curso>> response = cursoWebClient.get().uri("curso").accept(MediaType.APPLICATION_JSON)
 				.retrieve().toEntityList(Curso.class).block();
-		if (response.getStatusCode() == HttpStatus.OK) {
+		if (response != null && response.getStatusCode() == HttpStatus.OK) {
 			List<Curso> listaCursos = response.getBody();
 			List<Formacion> listaFormaciones = mapper.toFormacionList(listaCursos);
 
